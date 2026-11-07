@@ -66,3 +66,43 @@ def test_memory_stats_on_fresh_device_path():
     assert dev.index is not None
     x = torch.zeros(1024, 1024, device=dev)
     assert peak_bytes(torch.device("cuda")) >= x.numel() * 4
+
+
+class FakeScaler:
+    """Stands in for GradScaler and halves its scale on chosen update calls."""
+
+    def __init__(self, skip_on):
+        self.scale_value, self.calls, self.skip_on = 64.0, 0, skip_on
+
+    def is_enabled(self):
+        return True
+
+    def get_scale(self):
+        return self.scale_value
+
+    def scale(self, x):
+        return x
+
+    def unscale_(self, opt):
+        pass
+
+    def step(self, opt):
+        opt.step()
+
+    def update(self):
+        self.calls += 1
+        if self.calls in self.skip_on:
+            self.scale_value /= 2
+
+
+def test_skipped_step_indices_are_recorded(monkeypatch, tiny_config, tiny_data):
+    monkeypatch.setattr("wge.train.make_scaler", lambda enabled, init_scale=65536.0: FakeScaler({2, 5}))
+    r = equiv_run(Cfg("t", mode="lora", batch=4), tiny_data, CPU, steps=6, whisper_config=tiny_config)
+    assert r["skipped_indices"] == [2, 5] and r["skipped_steps"] == 2
+
+
+def test_init_scale_reaches_scaler(monkeypatch, tiny_config, tiny_data):
+    seen = []
+    monkeypatch.setattr("wge.train.make_scaler", lambda enabled, init_scale=65536.0: seen.append(init_scale) or FakeScaler(set()))
+    r = equiv_run(Cfg("t", mode="lora", batch=4, init_scale=32768.0), tiny_data, CPU, steps=1, whisper_config=tiny_config)
+    assert seen == [32768.0] and r["init_scale"] == 32768.0

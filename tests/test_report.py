@@ -30,3 +30,15 @@ def test_report_with_oom_and_scaling(tmp_path):
     assert eff["equivalence"]["pairwise"]["a_vs_b"]["max_abs_diff"] > 0.0099
     text = render(eff)
     assert "OOM" in text and "0.900" in text and "Tesla T4" in text
+
+
+def test_equiv_name_and_extra_run_in_report(tmp_path):
+    from wge.cli import equiv_name
+
+    assert equiv_name("c", 65536.0) == "equiv_c.json"
+    assert equiv_name("c", 32768.0) == "equiv_c_init32768.json"
+    for name, last, skips in [("b", 0.5, []), ("c_init32768", 0.51, [3])]:
+        _write(tmp_path, f"equiv_{name}.json", {"status": "ok", "losses": [1.0, last], "skipped_steps": len(skips), "skipped_indices": skips})
+    eff = build(tmp_path)
+    assert "b_vs_c_init32768" in eff["equivalence"]["pairwise"]
+    assert "init scale 32768" in render(eff) and "(steps 3)" in render(eff)

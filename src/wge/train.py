@@ -30,6 +30,7 @@ class Cfg:
     batch: int = 8          # per GPU, per micro-batch
     accum: int = 1
     lr: float | None = None
+    init_scale: float = 65536.0  # GradScaler starting loss scale
 
     @property
     def learning_rate(self):
@@ -66,10 +67,10 @@ def loss_sum(model, feats: torch.Tensor, labels: torch.Tensor, start_id: int) ->
     return F.cross_entropy(logits.float().reshape(-1, logits.shape[-1]), labels.reshape(-1), ignore_index=-100, reduction="sum")
 
 
-def make_scaler(enabled: bool):
+def make_scaler(enabled: bool, init_scale: float = 65536.0):
     if hasattr(torch.amp, "GradScaler"):
-        return torch.amp.GradScaler("cuda", enabled=enabled)
-    return torch.cuda.amp.GradScaler(enabled=enabled)
+        return torch.amp.GradScaler("cuda", init_scale=init_scale, enabled=enabled)
+    return torch.cuda.amp.GradScaler(init_scale=init_scale, enabled=enabled)
 
 
 def train_step(model, opt, scaler, micro, total_tokens: int, world: int, amp: bool, device, params) -> torch.Tensor:
@@ -137,12 +138,12 @@ def train_loop(model, cfg: Cfg, data: Data, *, steps: int, warmup: int = 0, seed
     params = [p for p in model.parameters() if p.requires_grad]
     opt = torch.optim.AdamW(params, lr=cfg.learning_rate, weight_decay=0.0)
     amp = cfg.amp and device.type == "cuda"
-    scaler = make_scaler(amp)
+    scaler = make_scaler(amp, cfg.init_scale)
     gb = cfg.batch * cfg.accum * world
     order = make_order(len(data), (warmup + steps) * gb, seed)
     model.train()
 
-    losses, skipped, share, t0 = [], 0, None, None
+    losses, skipped, share, t0 = [], [], None, None
     for s in range(warmup + steps):
         if s == warmup:
             _sync(device)
@@ -150,7 +151,7 @@ def train_loop(model, cfg: Cfg, data: Data, *, steps: int, warmup: int = 0, seed
         idx = global_slice(order, s, gb)
         total_tokens = int((data.labels[idx] != -100).sum())
         micro = [(data.features[m].to(device), data.labels[m].to(device)) for m in micro_batches(idx, cfg.batch, cfg.accum, rank, world)]
-        scale_before = scaler.get_scale() if (record and amp) else None
+        scale_before = scaler.get_scale() if (record and scaler.is_enabled()) else None
         share = train_step(model, opt, scaler, micro, total_tokens, world, amp, device, params)
         if record:
             g = share.clone()
@@ -158,12 +159,12 @@ def train_loop(model, cfg: Cfg, data: Data, *, steps: int, warmup: int = 0, seed
                 dist.all_reduce(g)
             losses.append(g.item())
             if scale_before is not None and scaler.get_scale() < scale_before:
-                skipped += 1
+                skipped.append(s + 1)
     _sync(device)
     elapsed = time.perf_counter() - t0
     if world > 1:
         dist.all_reduce(share)
-    return {"elapsed": elapsed, "last_loss": share.item(), "losses": losses, "skipped_steps": skipped, "samples_per_step": gb}
+    return {"elapsed": elapsed, "last_loss": share.item(), "losses": losses, "skipped_steps": len(skipped), "skipped_indices": skipped, "samples_per_step": gb}
 
 
 def _wrap(model, device, world):
@@ -190,4 +191,5 @@ def equiv_run(cfg: Cfg, data: Data, device, *, steps: int = 30, seed: int = 0, r
     device = init_cuda(device)
     model = _wrap(make_model(cfg, seed, whisper_config).to(device), device, world)
     out = train_loop(model, cfg, data, steps=steps, warmup=0, seed=seed, rank=rank, world=world, device=device, record=True)
-    return {"name": cfg.name, "global_batch": out["samples_per_step"], "losses": out["losses"], "skipped_steps": out["skipped_steps"]}
+    return {"name": cfg.name, "global_batch": out["samples_per_step"], "losses": out["losses"], "skipped_steps": out["skipped_steps"],
+            "skipped_indices": out["skipped_indices"], "init_scale": cfg.init_scale}

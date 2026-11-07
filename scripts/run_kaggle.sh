@@ -12,6 +12,17 @@ prep_env() {
 mkdir -p results/raw
 START=$(date +%s)
 
+# bash scripts/run_kaggle.sh equiv-scale: rerun only the DDP equivalence run
+# with a lower GradScaler init scale (features and earlier results must exist).
+if [ "${1:-}" = "equiv-scale" ]; then
+  stamp "equiv-scale: DDP 2x8, GradScaler init scale 32768"
+  prep_env
+  torchrun --nproc_per_node=2 -m wge.cli ddp-equiv --init-scale 32768
+  python -m wge.cli report
+  stamp "done in $(( $(date +%s) - START )) s"
+  exit 0
+fi
+
 stamp "stage 0: install"
 prep_env
 pip install -q "datasets<4" "transformers>=4.46,<5" peft soundfile

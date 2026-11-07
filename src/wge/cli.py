@@ -12,6 +12,7 @@ os.environ.setdefault("TRANSFORMERS_NO_TF", "1")
 
 import argparse
 import json
+from dataclasses import replace
 from pathlib import Path
 
 import torch
@@ -21,6 +22,7 @@ from .oom import guarded
 from .train import Cfg, bench_config, equiv_run, init_cuda
 
 RAW = Path("results/raw")
+DEFAULT_SCALE = 65536.0
 SWEEP = [4, 8, 16, 32, 64]
 LORA_FP16 = dict(mode="lora", amp=True)
 
@@ -139,11 +141,17 @@ EQUIV = {
 }
 
 
+def equiv_name(run: str, init_scale: float) -> str:
+    """Default-scale runs keep their plain name; others get the scale in the file name."""
+    return f"equiv_{run}.json" if init_scale == DEFAULT_SCALE else f"equiv_{run}_init{int(init_scale)}.json"
+
+
 def cmd_equiv(a):
     from .data import load
 
-    r = guarded(equiv_run, EQUIV[a.run], load(a.data), cuda_device(), steps=a.steps)
-    dump(f"equiv_{a.run}.json", r)
+    cfg = replace(EQUIV[a.run], init_scale=a.init_scale)
+    r = guarded(equiv_run, cfg, load(a.data), cuda_device(), steps=a.steps)
+    dump(equiv_name(a.run, a.init_scale), r)
 
 
 def cmd_ddp_equiv(a):
@@ -152,9 +160,10 @@ def cmd_ddp_equiv(a):
     from .data import load
 
     rank, world, dev = init_dist()
-    r = guarded(equiv_run, Cfg("c ddp 2x8", batch=8, **LORA_FP16), load(a.data), dev, steps=a.steps, rank=rank, world=world)
+    cfg = Cfg("c ddp 2x8", batch=8, init_scale=a.init_scale, **LORA_FP16)
+    r = guarded(equiv_run, cfg, load(a.data), dev, steps=a.steps, rank=rank, world=world)
     if rank == 0:
-        dump("equiv_c.json", r)
+        dump(equiv_name("c", a.init_scale), r)
     dist.destroy_process_group()
 
 
@@ -182,8 +191,8 @@ def main(argv=None):
     add("prepare", cmd_prepare, n=400, seed=0, out="data/features.pt")
     for name, fn in [("bench", cmd_bench), ("baseline", cmd_baseline), ("ddp-bench", cmd_ddp_bench)]:
         add(name, fn, data="data/features.pt", warmup=10, timed=40)
-    add("equiv", cmd_equiv, data="data/features.pt", steps=30).add_argument("--run", choices=list(EQUIV), required=True)
-    add("ddp-equiv", cmd_ddp_equiv, data="data/features.pt", steps=30)
+    add("equiv", cmd_equiv, data="data/features.pt", steps=30, init_scale=DEFAULT_SCALE).add_argument("--run", choices=list(EQUIV), required=True)
+    add("ddp-equiv", cmd_ddp_equiv, data="data/features.pt", steps=30, init_scale=DEFAULT_SCALE)
     add("report", cmd_report, out="results")
     a = p.parse_args(argv)
     a.fn(a)

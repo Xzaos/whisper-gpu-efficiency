@@ -28,6 +28,8 @@ def build(raw: str | Path) -> dict:
     eff["ddp_scaling"] = scaling
 
     runs = {k: _read(raw, f"equiv_{k}.json") for k in ("a", "b", "b_repeat", "c")}
+    for p in sorted(raw.glob("equiv_*_init*.json")):
+        runs[p.stem.removeprefix("equiv_")] = _read(raw, p.name)
     ok = {k: v["losses"] for k, v in runs.items() if v and v.get("status") == "ok"}
     eff["equivalence"] = {"runs": runs, "pairwise": pairwise_diffs(ok) if len(ok) > 1 else {}}
     return eff
@@ -91,14 +93,18 @@ def render(eff: dict) -> str:
     out += ["## Equivalence check (LoRA fp16, dropout off, same data order, 30 steps)", ""]
     eq = eff["equivalence"]
     rows = []
-    for k, label in [("a", "a: 1 GPU, batch 16"), ("b", "b: 1 GPU, batch 8 x accum 2"), ("b_repeat", "b rerun (noise floor)"), ("c", "c: DDP 2 x 8")]:
+    labels = {"a": "a: 1 GPU, batch 16", "b": "b: 1 GPU, batch 8 x accum 2", "b_repeat": "b rerun (noise floor)", "c": "c: DDP 2 x 8"}
+    for k in [*labels, *(k for k in eq["runs"] if k not in labels)]:
+        label = labels.get(k, f"{k}: DDP 2 x 8, GradScaler init scale {k.split('_init')[-1]}")
         r = eq["runs"].get(k)
         if r is None:
             rows.append([label, "_", "_", "_"])
         elif r.get("status") == "OOM":
             rows.append([label, "OOM", "_", "_"])
         else:
-            rows.append([label, f"{r['losses'][0]:.4f}", f"{r['losses'][-1]:.4f}", str(r["skipped_steps"])])
+            idx = r.get("skipped_indices")
+            skips = str(r["skipped_steps"]) + (f" (steps {', '.join(map(str, idx))})" if idx else "")
+            rows.append([label, f"{r['losses'][0]:.4f}", f"{r['losses'][-1]:.4f}", skips])
     out += [_table(["run", "loss step 1", "loss step 30", "fp16 skipped steps"], rows), ""]
     if eq["pairwise"]:
         rows = [[k, f"{v['max_abs_diff']:.2e}", str(v["at_step"])] for k, v in eq["pairwise"].items()]
