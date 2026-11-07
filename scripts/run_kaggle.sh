@@ -19,7 +19,11 @@ pip install -q -e .
 
 stamp "stage 1: prepare 400 FLEURS hi_in clips and precompute features"
 prep_env
-python -m wge.cli prepare --n 400 --out data/features.pt
+if [ -f data/features.pt ]; then
+  stamp "data/features.pt exists, skipping"
+else
+  python -m wge.cli prepare --n 400 --out data/features.pt
+fi
 
 stamp "stage 2: configs 1-4 and max batch sweep (single GPU)"
 prep_env

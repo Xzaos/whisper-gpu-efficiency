@@ -18,7 +18,7 @@ import torch
 
 from .metrics import largest_fitting, scaling_efficiency
 from .oom import guarded
-from .train import Cfg, bench_config, equiv_run
+from .train import Cfg, bench_config, equiv_run, init_cuda
 
 RAW = Path("results/raw")
 SWEEP = [4, 8, 16, 32, 64]
@@ -58,7 +58,7 @@ def env_info() -> dict:
 
 
 def cuda_device(local_rank: int = 0):
-    return torch.device("cuda", local_rank)
+    return init_cuda(torch.device("cuda", local_rank))
 
 
 def with_batch(cfg: Cfg, batch: int, accum: int = 1, name: str | None = None) -> Cfg:

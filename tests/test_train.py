@@ -56,3 +56,13 @@ def test_naive_microbatch_mean_would_not_match(tiny_config, tiny_data):
     naive = sum(s / t for s, t in zip(sums, toks)) / 2
     assert toks[0] != toks[1]
     assert abs(float(token_norm - naive)) > 1e-6
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="needs CUDA")
+def test_memory_stats_on_fresh_device_path():
+    from wge.train import peak_bytes, reset_peak
+
+    dev = reset_peak(torch.device("cuda"))
+    assert dev.index is not None
+    x = torch.zeros(1024, 1024, device=dev)
+    assert peak_bytes(torch.device("cuda")) >= x.numel() * 4

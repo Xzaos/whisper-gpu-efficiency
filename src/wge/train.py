@@ -95,6 +95,31 @@ def train_step(model, opt, scaler, micro, total_tokens: int, world: int, amp: bo
     return share
 
 
+def init_cuda(device) -> torch.device:
+    """Resolve a cuda device to an explicit index and initialise its context.
+
+    Memory-stat calls raise "Invalid device argument" on a device that has not
+    been touched yet, so select it and allocate a tiny tensor first.
+    """
+    if device.type != "cuda":
+        return device
+    idx = device.index if device.index is not None else torch.cuda.current_device()
+    torch.cuda.set_device(idx)
+    torch.zeros(1, device=f"cuda:{idx}")
+    return torch.device("cuda", idx)
+
+
+def reset_peak(device) -> torch.device:
+    device = init_cuda(device)
+    if device.type == "cuda":
+        torch.cuda.reset_peak_memory_stats(device)
+    return device
+
+
+def peak_bytes(device) -> int:
+    return torch.cuda.max_memory_allocated(init_cuda(device)) if device.type == "cuda" else 0
+
+
 def _sync(device):
     if device.type == "cuda":
         torch.cuda.synchronize(device)
@@ -152,17 +177,17 @@ def _wrap(model, device, world):
 def bench_config(cfg: Cfg, data: Data, device, *, warmup: int = 10, timed: int = 40, seed: int = 0, rank: int = 0, world: int = 1,
                  whisper_config=None) -> dict:
     """Build a fresh model, train warmup + timed steps, return the metric row."""
-    if device.type == "cuda":
-        torch.cuda.reset_peak_memory_stats(device)
+    device = reset_peak(device)
     model = _wrap(make_model(cfg, seed, whisper_config).to(device), device, world)
     out = train_loop(model, cfg, data, steps=timed, warmup=warmup, seed=seed, rank=rank, world=world, device=device)
-    peak = torch.cuda.max_memory_allocated(device) if device.type == "cuda" else 0
+    peak = peak_bytes(device)
     row = summarise(out["elapsed"], timed, out["samples_per_step"], peak, out["last_loss"])
     return {"name": cfg.name, "mode": cfg.mode, "amp": cfg.amp, "ckpt": cfg.ckpt, "batch": cfg.batch, "accum": cfg.accum,
             "world": world, "global_batch": out["samples_per_step"], "warmup": warmup, "timed": timed, **row}
 
 
 def equiv_run(cfg: Cfg, data: Data, device, *, steps: int = 30, seed: int = 0, rank: int = 0, world: int = 1, whisper_config=None) -> dict:
+    device = init_cuda(device)
     model = _wrap(make_model(cfg, seed, whisper_config).to(device), device, world)
     out = train_loop(model, cfg, data, steps=steps, warmup=0, seed=seed, rank=rank, world=world, device=device, record=True)
     return {"name": cfg.name, "global_batch": out["samples_per_step"], "losses": out["losses"], "skipped_steps": out["skipped_steps"]}
