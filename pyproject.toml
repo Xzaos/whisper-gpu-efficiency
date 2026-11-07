@@ -1,0 +1,30 @@
+[project]
+name = "wge"
+version = "0.1.0"
+description = "What mixed precision, gradient checkpointing, LoRA and 2-GPU DDP buy when fine-tuning whisper-small on 2 x T4"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "torch>=2.2",
+    "transformers>=4.46,<5",
+    "peft>=0.11",
+    "soundfile",
+    "datasets>=2.20,<4",
+    "asrbench @ git+https://github.com/Xzaos/indic-asr-bench.git",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+wge = "wge.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
