@@ -15,6 +15,7 @@ from dataclasses import dataclass
 import torch
 import torch.nn.functional as F
 
+from .diagnose import Diag, gather_ranks
 from .data import Data, global_slice, make_order, micro_batches
 from .metrics import summarise
 
@@ -73,7 +74,7 @@ def make_scaler(enabled: bool, init_scale: float = 65536.0):
     return torch.cuda.amp.GradScaler(init_scale=init_scale, enabled=enabled)
 
 
-def train_step(model, opt, scaler, micro, total_tokens: int, world: int, amp: bool, device, params) -> torch.Tensor:
+def train_step(model, opt, scaler, micro, total_tokens: int, world: int, amp: bool, device, params, diag=None) -> torch.Tensor:
     """One optimizer step over this rank's micro-batches. Returns this rank's
     share of the global loss (local token-loss sum / global token count)."""
     start = start_token(model)
@@ -88,7 +89,11 @@ def train_step(model, opt, scaler, micro, total_tokens: int, world: int, amp: bo
             # DDP averages gradients over ranks, so scale by world to get the sum
             scaler.scale(s * world / total_tokens).backward()
         share += s.detach() / total_tokens
+    if diag:
+        diag.after_backward()
     scaler.unscale_(opt)
+    if diag:
+        diag.after_unscale(scaler, opt)
     torch.nn.utils.clip_grad_norm_(params, 1.0)
     scaler.step(opt)
     scaler.update()
@@ -127,7 +132,7 @@ def _sync(device):
 
 
 def train_loop(model, cfg: Cfg, data: Data, *, steps: int, warmup: int = 0, seed: int = 0, rank: int = 0, world: int = 1,
-               device=torch.device("cpu"), record: bool = False) -> dict:
+               device=torch.device("cpu"), record: bool = False, diag=None) -> dict:
     """Run warmup untimed steps then `steps` timed ones.
 
     With record=True the global loss of every step is read back (one sync per
@@ -150,9 +155,14 @@ def train_loop(model, cfg: Cfg, data: Data, *, steps: int, warmup: int = 0, seed
             t0 = time.perf_counter()
         idx = global_slice(order, s, gb)
         total_tokens = int((data.labels[idx] != -100).sum())
-        micro = [(data.features[m].to(device), data.labels[m].to(device)) for m in micro_batches(idx, cfg.batch, cfg.accum, rank, world)]
+        mbs = micro_batches(idx, cfg.batch, cfg.accum, rank, world)
+        micro = [(data.features[m].to(device), data.labels[m].to(device)) for m in mbs]
         scale_before = scaler.get_scale() if (record and scaler.is_enabled()) else None
-        share = train_step(model, opt, scaler, micro, total_tokens, world, amp, device, params)
+        if diag:
+            diag.begin_step()
+        share = train_step(model, opt, scaler, micro, total_tokens, world, amp, device, params, diag)
+        if diag:
+            diag.end_step(s + 1, scale_before, share, [[data.ids[i] for i in m.tolist()] for m in mbs])
         if record:
             g = share.clone()
             if world > 1:
@@ -187,9 +197,13 @@ def bench_config(cfg: Cfg, data: Data, device, *, warmup: int = 10, timed: int =
             "world": world, "global_batch": out["samples_per_step"], "warmup": warmup, "timed": timed, **row}
 
 
-def equiv_run(cfg: Cfg, data: Data, device, *, steps: int = 30, seed: int = 0, rank: int = 0, world: int = 1, whisper_config=None) -> dict:
+def equiv_run(cfg: Cfg, data: Data, device, *, steps: int = 30, seed: int = 0, rank: int = 0, world: int = 1, whisper_config=None,
+              diagnose: bool = False) -> dict:
     device = init_cuda(device)
-    model = _wrap(make_model(cfg, seed, whisper_config).to(device), device, world)
-    out = train_loop(model, cfg, data, steps=steps, warmup=0, seed=seed, rank=rank, world=world, device=device, record=True)
-    return {"name": cfg.name, "global_batch": out["samples_per_step"], "losses": out["losses"], "skipped_steps": out["skipped_steps"],
+    model = make_model(cfg, seed, whisper_config).to(device)
+    diag = Diag({n: p for n, p in model.named_parameters() if p.requires_grad}) if diagnose else None
+    model = _wrap(model, device, world)
+    out = train_loop(model, cfg, data, steps=steps, warmup=0, seed=seed, rank=rank, world=world, device=device, record=True, diag=diag)
+    extra = {"diag": {"ranks": gather_ranks(diag, world)}} if diag else {}
+    return {**extra, "name": cfg.name, "global_batch": out["samples_per_step"], "losses": out["losses"], "skipped_steps": out["skipped_steps"],
             "skipped_indices": out["skipped_indices"], "init_scale": cfg.init_scale}

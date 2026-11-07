@@ -14,6 +14,22 @@ START=$(date +%s)
 
 # bash scripts/run_kaggle.sh equiv-scale: rerun only the DDP equivalence run
 # with a lower GradScaler init scale (features and earlier results must exist).
+# bash scripts/run_kaggle.sh diagnose: per-rank inf/grad/replica logging, fp16 and fp32.
+if [ "${1:-}" = "diagnose" ]; then
+  stamp "diagnose: c fp16"
+  prep_env
+  torchrun --nproc_per_node=2 -m wge.cli ddp-equiv --diagnose
+  stamp "diagnose: b fp16"
+  python -m wge.cli equiv --run b --diagnose
+  stamp "diagnose: b fp32"
+  python -m wge.cli equiv --run b --diagnose --fp32
+  stamp "diagnose: c fp32"
+  torchrun --nproc_per_node=2 -m wge.cli ddp-equiv --diagnose --fp32
+  python -m wge.cli diagnose-report
+  stamp "done in $(( $(date +%s) - START )) s"
+  exit 0
+fi
+
 if [ "${1:-}" = "equiv-scale" ]; then
   stamp "equiv-scale: DDP 2x8, GradScaler init scale 32768"
   prep_env

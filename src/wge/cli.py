@@ -146,12 +146,19 @@ def equiv_name(run: str, init_scale: float) -> str:
     return f"equiv_{run}.json" if init_scale == DEFAULT_SCALE else f"equiv_{run}_init{int(init_scale)}.json"
 
 
+def diag_name(run: str, fp32: bool) -> str:
+    return f"diag_{run}_{'fp32' if fp32 else 'fp16'}.json"
+
+
+def equiv_cfg(cfg: Cfg, a) -> Cfg:
+    return replace(cfg, init_scale=a.init_scale, amp=cfg.amp and not a.fp32)
+
+
 def cmd_equiv(a):
     from .data import load
 
-    cfg = replace(EQUIV[a.run], init_scale=a.init_scale)
-    r = guarded(equiv_run, cfg, load(a.data), cuda_device(), steps=a.steps)
-    dump(equiv_name(a.run, a.init_scale), r)
+    r = guarded(equiv_run, equiv_cfg(EQUIV[a.run], a), load(a.data), cuda_device(), steps=a.steps, diagnose=a.diagnose)
+    dump(diag_name(a.run, a.fp32) if (a.diagnose or a.fp32) else equiv_name(a.run, a.init_scale), r)
 
 
 def cmd_ddp_equiv(a):
@@ -160,11 +167,19 @@ def cmd_ddp_equiv(a):
     from .data import load
 
     rank, world, dev = init_dist()
-    cfg = Cfg("c ddp 2x8", batch=8, init_scale=a.init_scale, **LORA_FP16)
-    r = guarded(equiv_run, cfg, load(a.data), dev, steps=a.steps, rank=rank, world=world)
+    cfg = equiv_cfg(Cfg("c ddp 2x8", batch=8, **LORA_FP16), a)
+    r = guarded(equiv_run, cfg, load(a.data), dev, steps=a.steps, rank=rank, world=world, diagnose=a.diagnose)
     if rank == 0:
-        dump(equiv_name("c", a.init_scale), r)
+        dump(diag_name("c", a.fp32) if (a.diagnose or a.fp32) else equiv_name("c", a.init_scale), r)
     dist.destroy_process_group()
+
+
+def cmd_diagnose_report(a):
+    from .diagnose import analyse, render
+
+    Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+    Path(a.out).write_text(render(analyse(RAW)), encoding="utf-8")
+    print("wrote", a.out)
 
 
 def cmd_report(a):
@@ -191,9 +206,14 @@ def main(argv=None):
     add("prepare", cmd_prepare, n=400, seed=0, out="data/features.pt")
     for name, fn in [("bench", cmd_bench), ("baseline", cmd_baseline), ("ddp-bench", cmd_ddp_bench)]:
         add(name, fn, data="data/features.pt", warmup=10, timed=40)
-    add("equiv", cmd_equiv, data="data/features.pt", steps=30, init_scale=DEFAULT_SCALE).add_argument("--run", choices=list(EQUIV), required=True)
+    add("equiv", cmd_equiv, data="data/features.pt", steps=30, init_scale=DEFAULT_SCALE)
+    sub.choices["equiv"].add_argument("--run", choices=list(EQUIV), required=True)
     add("ddp-equiv", cmd_ddp_equiv, data="data/features.pt", steps=30, init_scale=DEFAULT_SCALE)
+    for name in ("equiv", "ddp-equiv"):
+        sub.choices[name].add_argument("--diagnose", action="store_true", help="log per-step, per-rank inf, grad and checksum records")
+        sub.choices[name].add_argument("--fp32", action="store_true", help="no autocast, no GradScaler")
     add("report", cmd_report, out="results")
+    add("diagnose-report", cmd_diagnose_report, out="results/diagnose.md")
     a = p.parse_args(argv)
     a.fn(a)
 
