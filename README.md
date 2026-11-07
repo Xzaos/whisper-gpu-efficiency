@@ -2,7 +2,7 @@
 
 What do mixed precision, gradient checkpointing, LoRA and 2-GPU data parallelism actually buy when fine-tuning whisper-small on a Kaggle "GPU T4 x2" machine? I measured each one with the same data, the same step count and a fixed sample order, and checked whether the 2-GPU and gradient-accumulation setups compute the same thing as a plain big batch.
 
-Short version: fp16 is the big win for speed, checkpointing buys batch size and not speed, LoRA saved little here, and DDP scaled almost perfectly. The equivalence check did not pass: DDP drifted away from batch 8 x accum 2, and I have a likely cause but have not shown it.
+Short version: fp16 is the big win for speed, checkpointing buys batch size and not speed, LoRA saved little here, and DDP scaled almost perfectly. The fp16 equivalence check did not pass, but the diagnosis shows the gap comes from nondeterministic GradScaler skips and not from DDP: in fp32, DDP matches batch 8 x accum 2 to 4.65e-04.
 
 Everything below comes from `results/report.md` and `results/raw/*.json`, from one run on two Tesla T4s (torch 2.11.0+cu130, transformers 4.57.6, peft 0.21.2).
 
@@ -58,25 +58,23 @@ Scaling efficiency = throughput_2gpu / (2 x throughput_1gpu) = 0.989. Only the L
 
 ### Equivalence check
 
-30 steps of LoRA fp16 with dropout off and the same data order. Run (a), one GPU at batch 16, ran out of memory, so there is no direct large-batch reference. I compared (b) one GPU at batch 8 x accum 2, a rerun of (b) as a noise floor, and (c) DDP 2 x 8.
+30 steps of LoRA fp16 with dropout off and the same data order. Run (a), one GPU at batch 16, ran out of memory, so there is no direct large-batch reference. I compared (b) one GPU at batch 8 x accum 2, a rerun of (b), and (c) DDP 2 x 8, then ran a diagnosis (`results/diagnose.md`) that logs inf gradients per rank, compares weight checksums across ranks and repeats b and c in fp32.
 
-| run | loss step 1 | loss step 30 | fp16 skipped steps |
-|---|---|---|---|
-| b: 1 GPU, batch 8 x accum 2 | 3.7591 | 0.4782 | 0 |
-| b rerun | 3.7591 | 0.4774 | 0 |
-| c: DDP 2 x 8 | 3.7591 | 0.5504 | 2 |
-
-| pair | max per-step abs loss diff | at step |
+| comparison | max abs loss diff | at step |
 |---|---|---|
-| b vs b rerun | 1.10e-02 | 16 |
-| b vs c | 3.74e-01 | 7 |
-| b rerun vs c | 3.72e-01 | 7 |
+| b vs c, fp16 | 4.85 | 9 |
+| b vs b rerun, fp16 | 9.77 | 9 |
+| b vs c, fp32 | 4.65e-04 | 18 |
 
-The two identical runs differ by up to 1.1e-2, and DDP differs from accumulation by 3.7e-1, about 34 times the noise floor. The three runs agree through step 4 and DDP separates at step 5 to 6. The check did not pass.
+The fp32 control agrees to 4.65e-04 at worst, so DDP, the loss normalisation and the sharding are correct. Both ranks together saw b's samples at every step. The replicas never diverge either: weight checksums were identical across ranks (max diff 0) in fp16 and in fp32. When one rank gets an inf, the all-reduce carries it to the other, so both skip the step together. At step 5 of the fp16 DDP run, rank 1 had a non-finite gradient in 1 parameter before the all-reduce and in 162 after it.
 
-The one difference I can see in the data is that the DDP run skipped 2 optimizer steps because of fp16 gradient overflow, and the accumulation runs skipped none. A skipped step means that run made two fewer updates, which would leave its loss higher at the end (0.550 vs 0.478). I think this is the leading explanation, but I have not shown it. Why DDP overflows more is also open. One guess: each rank scales its loss by the world size before DDP averages, so per-rank scaled gradients are twice as large as in the accumulation run at the same GradScaler scale.
+The cause is that fp16 GradScaler skip decisions are not deterministic across runs, and each skip forks the trajectory. In the diagnose run b overflowed at steps 5, 8 and 9 and c at steps 5 and 6. In the earlier run b skipped none. The parameters named in the overflow log are decoder layer 0 LoRA weights, early in training. A rerun of the identical b config diverged from b by 9.77, more than DDP did from accumulation (4.85), so the fp16 gap says nothing about DDP. The 1.1e-02 noise floor I reported earlier came from two runs that happened to make the same skip decisions.
 
-On loss normalisation, which I checked in the code: the DDP path divides by the global token count, not each rank's local count. Every rank computes the token count from the full global batch slice (same seed, same order), so no all-reduce is needed, and the loss is scaled by world size so that DDP's gradient averaging gives the sum over the global batch. Local normalisation is therefore not a second cause. I have not tested the code path on a GPU beyond this run, though the CPU gloo test shows DDP matching a single process in fp32.
+I had guessed that scaling the loss by world size doubles the per-rank scaled gradients and makes DDP overflow more. That is rejected: b has no DDP and overflowed three times. The overflows also kept happening after the scale had backed off, at 32768 (c step 6, b step 8) and 16384 (b step 9), so halving the initial scale does not look like enough to avoid overflow in layer 0.
+
+For equivalence checks I compare fp16 runs only with skip logging on, and use fp32, bf16 on hardware that supports it, or a much lower init scale.
+
+On loss normalisation, which I checked in the code: the DDP path divides by the global token count, not each rank's local count. Every rank computes the token count from the full global batch slice (same seed, same order), so no all-reduce is needed, and the loss is scaled by world size so that DDP's gradient averaging gives the sum over the global batch. The fp32 control above confirms this on the GPUs.
 
 ## Running it
 
@@ -96,8 +94,8 @@ The script prints a timestamp per stage. Before each stage it runs `pip uninstal
 - No FSDP or DeepSpeed, so nothing here says what sharding would buy.
 - fp16 runs keep fp32 master weights under autocast; I did not try casting the frozen LoRA base to fp16.
 - Features are copied from CPU to GPU every step, which is inside the timed region.
-- The equivalence check failed and its cause is not established.
+- The fp16 equivalence check cannot separate DDP from skip noise, so the DDP check rests on the fp32 run, which is one seed and 30 steps.
 
 ## Next steps
 
-Rerun the equivalence check with a lower GradScaler `init_scale`, or in fp32, to see whether the DDP gap falls to the noise floor. If it does, the skipped steps are the cause.
+Rerun the fp16 equivalence with a much lower GradScaler `init_scale` and skip logging on, to see whether the runs stop skipping and agree.
