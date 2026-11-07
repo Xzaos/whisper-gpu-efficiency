@@ -1,4 +1,4 @@
-# whisper-gpu-efficiency
+# Whisper GPU Efficiency
 
 What do mixed precision, gradient checkpointing, LoRA and 2-GPU data parallelism actually buy when fine-tuning whisper-small on a Kaggle "GPU T4 x2" machine? I measured each one with the same data, the same step count and a fixed sample order, and checked whether the 2-GPU and gradient-accumulation setups compute the same thing as a plain big batch.
 
