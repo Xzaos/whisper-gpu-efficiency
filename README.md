@@ -18,30 +18,30 @@ Everything below comes from `results/report.md` and `results/raw/*.json`, from o
 
 | config | batch | samples/s | ms/step | peak GB | loss |
 |---|---|---|---|---|---|
-| 1 full fp32 | 8 | 2.0 | 4046 | 12.79 | 0.560 |
-| 2 full fp16 | 8 | 6.8 | 1170 | 10.21 | 0.569 |
-| 3 full fp16 + checkpointing | 8 | 5.5 | 1453 | 4.76 | 0.569 |
-| 4 LoRA fp16 | 8 | 6.4 | 1251 | 8.78 | 0.520 |
+| 1 full fp32 | 8 | 2.0 | 4043 | 12.79 | 0.560 |
+| 2 full fp16 | 8 | 7.4 | 1075 | 10.21 | 0.569 |
+| 3 full fp16 + checkpointing | 8 | 6.0 | 1325 | 4.76 | 0.568 |
+| 4 LoRA fp16 | 8 | 7.0 | 1136 | 8.78 | 0.522 |
 
 Largest batch that fits, trying 4, 8, 16, 32, 64 and stopping at the first OOM. These sweep runs used 2 warmup and 4 timed steps, to keep the whole run under 25 minutes.
 
 | config | max batch | samples/s at max | peak GB at max |
 |---|---|---|---|
-| 2 full fp16 | 8 | 6.8 | 10.21 |
-| 3 full fp16 + checkpointing | 32 | 5.6 | 9.54 |
-| 4 LoRA fp16 | 8 | 6.5 | 8.78 |
+| 2 full fp16 | 8 | 7.5 | 10.21 |
+| 3 full fp16 + checkpointing | 32 | 6.4 | 9.54 |
+| 4 LoRA fp16 | 8 | 7.0 | 8.78 |
 
 ### Mixed precision
 
-fp16 autocast took throughput from 2.0 to 6.8 samples/s, 3.4 times faster. Peak memory went from 12.79 to 10.21 GiB, so the memory saving is much smaller than the speed gain: the weights, gradients and optimizer state stay in fp32.
+fp16 autocast took throughput from 2.0 to 7.4 samples/s, 3.8 times faster. Peak memory went from 12.79 to 10.21 GiB, so the memory saving is much smaller than the speed gain: the weights, gradients and optimizer state stay in fp32.
 
 ### Gradient checkpointing
 
-At batch 8 it cut peak memory from 10.21 to 4.76 GiB and cost 1170 to 1453 ms/step (24% slower). The largest batch went from 8 to 32. But throughput at batch 32 is 5.6 samples/s, still below plain fp16 at batch 8 (6.8). So checkpointing buys batch size and not speed. I did not test whether a larger batch helps final quality, which is the only reason I would want it here.
+At batch 8 it cut peak memory from 10.21 to 4.76 GiB and cost 1075 to 1325 ms/step (23% slower). The largest batch went from 8 to 32. But throughput at batch 32 is 6.4 samples/s, still below plain fp16 at batch 8 (7.4). So checkpointing buys batch size and not speed. I did not test whether a larger batch helps final quality, which is the only reason I would want it here.
 
 ### LoRA
 
-LoRA only dropped peak memory from 10.21 to 8.78 GiB and was not faster (6.4 vs 6.8 samples/s). It also did not raise the largest batch, which stays at 8. My reading is that activations dominate: Whisper pads every input to 30 s, and LoRA still backpropagates through the whole network, so it saves optimizer state and little else. I did not profile activations separately, so this is the explanation that fits the numbers and not something I measured.
+LoRA only dropped peak memory from 10.21 to 8.78 GiB and was not faster (7.0 vs 7.4 samples/s). It also did not raise the largest batch, which stays at 8. My reading is that activations dominate: Whisper pads every input to 30 s, and LoRA still backpropagates through the whole network, so it saves optimizer state and little else. I did not profile activations separately, so this is the explanation that fits the numbers and not something I measured.
 
 This also explains why [whisper-hindi-telephony](https://github.com/Xzaos/whisper-hindi-telephony) ran out of memory at batch 16 on a T4 even with LoRA: here batch 16 is also OOM for LoRA fp16.
 
@@ -51,10 +51,10 @@ LoRA fp16, global batch 16. Batch 16 on one GPU ran out of memory, so the single
 
 | run | batch x accum x gpus = global | samples/s | ms/step | peak GB |
 |---|---|---|---|---|
-| 1 GPU | 8 x 2 x 1 = 16 | 6.4 | 2496 | 8.83 |
-| 2 GPU DDP | 8 x 1 x 2 = 16 | 12.7 | 1262 | 8.82 |
+| 1 GPU | 8 x 2 x 1 = 16 | 7.1 | 2267 | 8.83 |
+| 2 GPU DDP | 8 x 1 x 2 = 16 | 13.8 | 1159 | 8.82 |
 
-Scaling efficiency = throughput_2gpu / (2 x throughput_1gpu) = 0.989. Only the LoRA gradients are all-reduced, which is small, so near-linear scaling is not surprising, but it is one machine and one run.
+Scaling efficiency = throughput_2gpu / (2 x throughput_1gpu) = 0.978. Only the LoRA gradients are all-reduced, which is small, so near-linear scaling is not surprising, but it is one machine and one run.
 
 ### Equivalence check
 
