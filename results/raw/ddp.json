@@ -1,0 +1,21 @@
+{
+  "status": "ok",
+  "name": "ddp lora fp16",
+  "mode": "lora",
+  "amp": true,
+  "ckpt": false,
+  "batch": 8,
+  "accum": 1,
+  "world": 2,
+  "global_batch": 16,
+  "warmup": 10,
+  "timed": 40,
+  "samples_per_s": 12.681195433334212,
+  "ms_per_step": 1261.7107025999985,
+  "peak_gb": 8.816099166870117,
+  "loss": 0.32582277059555054,
+  "peak_gb_per_rank": [
+    8.816099166870117,
+    8.816099166870117
+  ]
+}

@@ -1,0 +1,254 @@
+{
+  "env": {
+    "torch": "2.11.0+cu130",
+    "transformers": "4.57.6",
+    "cuda": "13.0",
+    "peft": "0.21.2",
+    "gpus": [
+      "Tesla T4",
+      "Tesla T4"
+    ]
+  },
+  "configs": [
+    {
+      "status": "ok",
+      "name": "1 full fp32",
+      "mode": "full",
+      "amp": false,
+      "ckpt": false,
+      "batch": 8,
+      "accum": 1,
+      "world": 1,
+      "global_batch": 8,
+      "warmup": 10,
+      "timed": 40,
+      "samples_per_s": 1.9773989350341765,
+      "ms_per_step": 4045.718776449999,
+      "peak_gb": 12.787545680999756,
+      "loss": 0.5604755282402039
+    },
+    {
+      "status": "ok",
+      "name": "2 full fp16",
+      "mode": "full",
+      "amp": true,
+      "ckpt": false,
+      "batch": 8,
+      "accum": 1,
+      "world": 1,
+      "global_batch": 8,
+      "warmup": 10,
+      "timed": 40,
+      "samples_per_s": 6.83976906135515,
+      "ms_per_step": 1169.6301334499992,
+      "peak_gb": 10.210258960723877,
+      "loss": 0.568501353263855
+    },
+    {
+      "status": "ok",
+      "name": "3 full fp16 + ckpt",
+      "mode": "full",
+      "amp": true,
+      "ckpt": true,
+      "batch": 8,
+      "accum": 1,
+      "world": 1,
+      "global_batch": 8,
+      "warmup": 10,
+      "timed": 40,
+      "samples_per_s": 5.505701892142189,
+      "ms_per_step": 1453.0390777999996,
+      "peak_gb": 4.756356716156006,
+      "loss": 0.5687257051467896
+    },
+    {
+      "status": "ok",
+      "name": "4 lora fp16",
+      "mode": "lora",
+      "amp": true,
+      "ckpt": false,
+      "batch": 8,
+      "accum": 1,
+      "world": 1,
+      "global_batch": 8,
+      "warmup": 10,
+      "timed": 40,
+      "samples_per_s": 6.3929750956821225,
+      "ms_per_step": 1251.3735593000006,
+      "peak_gb": 8.776517868041992,
+      "loss": 0.5204650163650513
+    }
+  ],
+  "sweep": {
+    "2 full fp16": {
+      "rows": [
+        {
+          "status": "ok",
+          "name": "2 full fp16",
+          "mode": "full",
+          "amp": true,
+          "ckpt": false,
+          "batch": 4,
+          "accum": 1,
+          "world": 1,
+          "global_batch": 4,
+          "warmup": 2,
+          "timed": 4,
+          "samples_per_s": 6.390943879140823,
+          "ms_per_step": 625.8856399999786,
+          "peak_gb": 6.726175308227539,
+          "loss": 1.7111682891845703
+        },
+        {
+          "status": "ok",
+          "name": "2 full fp16",
+          "mode": "full",
+          "amp": true,
+          "ckpt": false,
+          "batch": 8,
+          "accum": 1,
+          "world": 1,
+          "global_batch": 8,
+          "warmup": 2,
+          "timed": 4,
+          "samples_per_s": 6.83483612356058,
+          "ms_per_step": 1170.474296000009,
+          "peak_gb": 10.211235523223877,
+          "loss": 1.423597812652588
+        },
+        {
+          "status": "OOM",
+          "name": "2 full fp16",
+          "batch": 16
+        }
+      ],
+      "max_batch": 8
+    },
+    "3 full fp16 + ckpt": {
+      "rows": [
+        {
+          "status": "ok",
+          "name": "3 full fp16 + ckpt",
+          "mode": "full",
+          "amp": true,
+          "ckpt": true,
+          "batch": 4,
+          "accum": 1,
+          "world": 1,
+          "global_batch": 4,
+          "warmup": 2,
+          "timed": 4,
+          "samples_per_s": 5.124784950210616,
+          "ms_per_step": 780.5205562499964,
+          "peak_gb": 4.527392387390137,
+          "loss": 1.7111430168151855
+        },
+        {
+          "status": "ok",
+          "name": "3 full fp16 + ckpt",
+          "mode": "full",
+          "amp": true,
+          "ckpt": true,
+          "batch": 8,
+          "accum": 1,
+          "world": 1,
+          "global_batch": 8,
+          "warmup": 2,
+          "timed": 4,
+          "samples_per_s": 5.481592004486354,
+          "ms_per_step": 1459.4300329999896,
+          "peak_gb": 4.756356716156006,
+          "loss": 1.4240139722824097
+        },
+        {
+          "status": "ok",
+          "name": "3 full fp16 + ckpt",
+          "mode": "full",
+          "amp": true,
+          "ckpt": true,
+          "batch": 16,
+          "accum": 1,
+          "world": 1,
+          "global_batch": 16,
+          "warmup": 2,
+          "timed": 4,
+          "samples_per_s": 5.476623954786502,
+          "ms_per_step": 2921.5078727499986,
+          "peak_gb": 6.240156650543213,
+          "loss": 1.4362719058990479
+        },
+        {
+          "status": "ok",
+          "name": "3 full fp16 + ckpt",
+          "mode": "full",
+          "amp": true,
+          "ckpt": true,
+          "batch": 32,
+          "accum": 1,
+          "world": 1,
+          "global_batch": 32,
+          "warmup": 2,
+          "timed": 4,
+          "samples_per_s": 5.649397867572327,
+          "ms_per_step": 5664.320472749978,
+          "peak_gb": 9.536898612976074,
+          "loss": 1.496029019355774
+        },
+        {
+          "status": "OOM",
+          "name": "3 full fp16 + ckpt",
+          "batch": 64
+        }
+      ],
+      "max_batch": 32
+    },
+    "4 lora fp16": {
+      "rows": [
+        {
+          "status": "ok",
+          "name": "4 lora fp16",
+          "mode": "lora",
+          "amp": true,
+          "ckpt": false,
+          "batch": 4,
+          "accum": 1,
+          "world": 1,
+          "global_batch": 4,
+          "warmup": 2,
+          "timed": 4,
+          "samples_per_s": 6.454621256443945,
+          "ms_per_step": 619.7110319999979,
+          "peak_gb": 5.181337833404541,
+          "loss": 1.5836747884750366
+        },
+        {
+          "status": "ok",
+          "name": "4 lora fp16",
+          "mode": "lora",
+          "amp": true,
+          "ckpt": false,
+          "batch": 8,
+          "accum": 1,
+          "world": 1,
+          "global_batch": 8,
+          "warmup": 2,
+          "timed": 4,
+          "samples_per_s": 6.463000985901201,
+          "ms_per_step": 1237.8150672499828,
+          "peak_gb": 8.776517868041992,
+          "loss": 1.0057669878005981
+        },
+        {
+          "status": "OOM",
+          "name": "4 lora fp16",
+          "batch": 16
+        }
+      ],
+      "max_batch": 8
+    }
+  },
+  "sweep_steps": {
+    "warmup": 2,
+    "timed": 4
+  }
+}

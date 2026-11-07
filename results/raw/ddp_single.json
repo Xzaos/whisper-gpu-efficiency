@@ -1,0 +1,18 @@
+{
+  "status": "ok",
+  "name": "1 gpu lora fp16 8x2",
+  "mode": "lora",
+  "amp": true,
+  "ckpt": false,
+  "batch": 8,
+  "accum": 2,
+  "world": 1,
+  "global_batch": 16,
+  "warmup": 10,
+  "timed": 40,
+  "samples_per_s": 6.409420002708816,
+  "ms_per_step": 2496.325719524998,
+  "peak_gb": 8.830047607421875,
+  "loss": 0.3222498297691345,
+  "fallback": "batch 16 OOM"
+}
