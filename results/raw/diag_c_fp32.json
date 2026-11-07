@@ -1,0 +1,1548 @@
+{
+  "status": "ok",
+  "diag": {
+    "ranks": [
+      [
+        {
+          "step": 1,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.6962682604789734,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.7159832119941711,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000236",
+              "train_hi_bench_001187",
+              "train_hi_bench_001532",
+              "train_hi_bench_000937",
+              "train_hi_bench_000832",
+              "train_hi_bench_000165",
+              "train_hi_bench_001295",
+              "train_hi_bench_001332"
+            ]
+          ],
+          "weight_sum": -27.524304636937494,
+          "weight_abs_sum": 99029.62058959862
+        },
+        {
+          "step": 2,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.6676207184791565,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.6603156924247742,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001254",
+              "train_hi_bench_001065",
+              "train_hi_bench_001849",
+              "train_hi_bench_001175",
+              "train_hi_bench_000530",
+              "train_hi_bench_000003",
+              "train_hi_bench_001785",
+              "train_hi_bench_000710"
+            ]
+          ],
+          "weight_sum": -56.385473537304165,
+          "weight_abs_sum": 100482.60553439322
+        },
+        {
+          "step": 3,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.08611715584993362,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.0840107798576355,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000331",
+              "train_hi_bench_001925",
+              "train_hi_bench_001576",
+              "train_hi_bench_002021",
+              "train_hi_bench_000667",
+              "train_hi_bench_001310",
+              "train_hi_bench_000322",
+              "train_hi_bench_000717"
+            ]
+          ],
+          "weight_sum": -66.30135463981594,
+          "weight_abs_sum": 101431.7313639178
+        },
+        {
+          "step": 4,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.06601740419864655,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.05446368455886841,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001363",
+              "train_hi_bench_001547",
+              "train_hi_bench_000734",
+              "train_hi_bench_001313",
+              "train_hi_bench_000575",
+              "train_hi_bench_000412",
+              "train_hi_bench_001221",
+              "train_hi_bench_001852"
+            ]
+          ],
+          "weight_sum": -78.47555961949124,
+          "weight_abs_sum": 102318.51142282582
+        },
+        {
+          "step": 5,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 1.1603385210037231,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.7578617930412292,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001917",
+              "train_hi_bench_000999",
+              "train_hi_bench_001217",
+              "train_hi_bench_001961",
+              "train_hi_bench_000118",
+              "train_hi_bench_001822",
+              "train_hi_bench_001162",
+              "train_hi_bench_000822"
+            ]
+          ],
+          "weight_sum": -84.29715676334402,
+          "weight_abs_sum": 103082.09841617932
+        },
+        {
+          "step": 6,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.03941630572080612,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.0253671295940876,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001123",
+              "train_hi_bench_001883",
+              "train_hi_bench_000386",
+              "train_hi_bench_001891",
+              "train_hi_bench_000127",
+              "train_hi_bench_000046",
+              "train_hi_bench_001143",
+              "train_hi_bench_000570"
+            ]
+          ],
+          "weight_sum": -75.16245236386997,
+          "weight_abs_sum": 103732.87567832357
+        },
+        {
+          "step": 7,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.07670201361179352,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.07603149116039276,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000446",
+              "train_hi_bench_002034",
+              "train_hi_bench_000917",
+              "train_hi_bench_000408",
+              "train_hi_bench_000525",
+              "train_hi_bench_001662",
+              "train_hi_bench_001432",
+              "train_hi_bench_001346"
+            ]
+          ],
+          "weight_sum": -68.19993866357508,
+          "weight_abs_sum": 104340.56956453677
+        },
+        {
+          "step": 8,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.029939424246549606,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.020594019442796707,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000981",
+              "train_hi_bench_000837",
+              "train_hi_bench_000563",
+              "train_hi_bench_001817",
+              "train_hi_bench_000346",
+              "train_hi_bench_001430",
+              "train_hi_bench_001715",
+              "train_hi_bench_001847"
+            ]
+          ],
+          "weight_sum": -63.43509625022954,
+          "weight_abs_sum": 104936.4318545894
+        },
+        {
+          "step": 9,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.0286419540643692,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.01651180163025856,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001399",
+              "train_hi_bench_000482",
+              "train_hi_bench_001834",
+              "train_hi_bench_000701",
+              "train_hi_bench_001245",
+              "train_hi_bench_001725",
+              "train_hi_bench_000562",
+              "train_hi_bench_001518"
+            ]
+          ],
+          "weight_sum": -56.433788242493755,
+          "weight_abs_sum": 105513.6686394939
+        },
+        {
+          "step": 10,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.024726921692490578,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.030238039791584015,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001877",
+              "train_hi_bench_000872",
+              "train_hi_bench_001391",
+              "train_hi_bench_001978",
+              "train_hi_bench_001320",
+              "train_hi_bench_001470",
+              "train_hi_bench_000922",
+              "train_hi_bench_000373"
+            ]
+          ],
+          "weight_sum": -51.00070630031238,
+          "weight_abs_sum": 106080.61068037886
+        },
+        {
+          "step": 11,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.043928198516368866,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.024244414642453194,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000245",
+              "train_hi_bench_001656",
+              "train_hi_bench_001449",
+              "train_hi_bench_001826",
+              "train_hi_bench_001241",
+              "train_hi_bench_001290",
+              "train_hi_bench_000339",
+              "train_hi_bench_001270"
+            ]
+          ],
+          "weight_sum": -44.243116373285375,
+          "weight_abs_sum": 106624.21352583052
+        },
+        {
+          "step": 12,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.018146971240639687,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.018600625917315483,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001833",
+              "train_hi_bench_000358",
+              "train_hi_bench_000030",
+              "train_hi_bench_000513",
+              "train_hi_bench_001489",
+              "train_hi_bench_001041",
+              "train_hi_bench_002004",
+              "train_hi_bench_000497"
+            ]
+          ],
+          "weight_sum": -38.020176700504834,
+          "weight_abs_sum": 107147.0118743944
+        },
+        {
+          "step": 13,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.02758280374109745,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.02661219984292984,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_002010",
+              "train_hi_bench_000894",
+              "train_hi_bench_001571",
+              "train_hi_bench_001577",
+              "train_hi_bench_001534",
+              "train_hi_bench_001384",
+              "train_hi_bench_001060",
+              "train_hi_bench_001192"
+            ]
+          ],
+          "weight_sum": -31.686724507168474,
+          "weight_abs_sum": 107643.98847262695
+        },
+        {
+          "step": 14,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.023193705826997757,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.019202232360839844,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001697",
+              "train_hi_bench_000004",
+              "train_hi_bench_000601",
+              "train_hi_bench_000616",
+              "train_hi_bench_000083",
+              "train_hi_bench_001466",
+              "train_hi_bench_000965",
+              "train_hi_bench_002117"
+            ]
+          ],
+          "weight_sum": -27.725760633009106,
+          "weight_abs_sum": 108118.3084402898
+        },
+        {
+          "step": 15,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.028651952743530273,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.037275444716215134,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_002101",
+              "train_hi_bench_001362",
+              "train_hi_bench_000398",
+              "train_hi_bench_000207",
+              "train_hi_bench_001981",
+              "train_hi_bench_000237",
+              "train_hi_bench_001794",
+              "train_hi_bench_002022"
+            ]
+          ],
+          "weight_sum": -19.152984791671873,
+          "weight_abs_sum": 108579.5875961396
+        },
+        {
+          "step": 16,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.08292784541845322,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.03257418051362038,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000977",
+              "train_hi_bench_000102",
+              "train_hi_bench_001957",
+              "train_hi_bench_002073",
+              "train_hi_bench_001633",
+              "train_hi_bench_001364",
+              "train_hi_bench_002045",
+              "train_hi_bench_001008"
+            ]
+          ],
+          "weight_sum": -14.42813801706159,
+          "weight_abs_sum": 109020.93754180697
+        },
+        {
+          "step": 17,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.04100246727466583,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.02258196286857128,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001945",
+              "train_hi_bench_001253",
+              "train_hi_bench_001790",
+              "train_hi_bench_001080",
+              "train_hi_bench_000644",
+              "train_hi_bench_001066",
+              "train_hi_bench_001700",
+              "train_hi_bench_001452"
+            ]
+          ],
+          "weight_sum": -11.944181250306425,
+          "weight_abs_sum": 109437.1505578749
+        },
+        {
+          "step": 18,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.05282537266612053,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.06622124463319778,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001952",
+              "train_hi_bench_000316",
+              "train_hi_bench_001271",
+              "train_hi_bench_000161",
+              "train_hi_bench_000253",
+              "train_hi_bench_000033",
+              "train_hi_bench_001234",
+              "train_hi_bench_000086"
+            ]
+          ],
+          "weight_sum": -14.124909187420581,
+          "weight_abs_sum": 109833.32963179893
+        },
+        {
+          "step": 19,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.1025361493229866,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.0601876899600029,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000758",
+              "train_hi_bench_000389",
+              "train_hi_bench_000664",
+              "train_hi_bench_001285",
+              "train_hi_bench_001840",
+              "train_hi_bench_001722",
+              "train_hi_bench_002041",
+              "train_hi_bench_000511"
+            ]
+          ],
+          "weight_sum": -10.285721271193868,
+          "weight_abs_sum": 110218.43049547558
+        },
+        {
+          "step": 20,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.07551244646310806,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.07077577710151672,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001305",
+              "train_hi_bench_001684",
+              "train_hi_bench_001249",
+              "train_hi_bench_000893",
+              "train_hi_bench_002094",
+              "train_hi_bench_002059",
+              "train_hi_bench_000038",
+              "train_hi_bench_001839"
+            ]
+          ],
+          "weight_sum": -10.87359847282029,
+          "weight_abs_sum": 110592.0779153254
+        },
+        {
+          "step": 21,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.10406249761581421,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.05678335949778557,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001297",
+              "train_hi_bench_002080",
+              "train_hi_bench_001485",
+              "train_hi_bench_000589",
+              "train_hi_bench_000080",
+              "train_hi_bench_001207",
+              "train_hi_bench_001163",
+              "train_hi_bench_000856"
+            ]
+          ],
+          "weight_sum": -14.604716570795853,
+          "weight_abs_sum": 110951.67054662277
+        },
+        {
+          "step": 22,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.024355508387088776,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.029761357232928276,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001240",
+              "train_hi_bench_000914",
+              "train_hi_bench_002107",
+              "train_hi_bench_000761",
+              "train_hi_bench_001148",
+              "train_hi_bench_001082",
+              "train_hi_bench_001670",
+              "train_hi_bench_001751"
+            ]
+          ],
+          "weight_sum": -15.116203790719684,
+          "weight_abs_sum": 111295.50804968068
+        },
+        {
+          "step": 23,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.08905137330293655,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.030582357197999954,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000564",
+              "train_hi_bench_001807",
+              "train_hi_bench_000850",
+              "train_hi_bench_001084",
+              "train_hi_bench_000200",
+              "train_hi_bench_000440",
+              "train_hi_bench_000282",
+              "train_hi_bench_000974"
+            ]
+          ],
+          "weight_sum": -13.263726634735884,
+          "weight_abs_sum": 111626.3846758572
+        },
+        {
+          "step": 24,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.07537992298603058,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.04094715416431427,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000369",
+              "train_hi_bench_000583",
+              "train_hi_bench_000437",
+              "train_hi_bench_000452",
+              "train_hi_bench_000027",
+              "train_hi_bench_001165",
+              "train_hi_bench_001941",
+              "train_hi_bench_001236"
+            ]
+          ],
+          "weight_sum": -14.824822818552008,
+          "weight_abs_sum": 111943.58673666648
+        },
+        {
+          "step": 25,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.030296962708234787,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.03922658413648605,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000243",
+              "train_hi_bench_002098",
+              "train_hi_bench_000267",
+              "train_hi_bench_001933",
+              "train_hi_bench_001560",
+              "train_hi_bench_000431",
+              "train_hi_bench_001813",
+              "train_hi_bench_000801"
+            ]
+          ],
+          "weight_sum": -17.964009896147108,
+          "weight_abs_sum": 112247.50387004875
+        },
+        {
+          "step": 26,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.048043157905340195,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.03219868242740631,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001066",
+              "train_hi_bench_000908",
+              "train_hi_bench_001430",
+              "train_hi_bench_002089",
+              "train_hi_bench_001978",
+              "train_hi_bench_000497",
+              "train_hi_bench_000254",
+              "train_hi_bench_000681"
+            ]
+          ],
+          "weight_sum": -20.96936367995953,
+          "weight_abs_sum": 112546.729111644
+        },
+        {
+          "step": 27,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.05299104377627373,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.04260646551847458,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000038",
+              "train_hi_bench_001436",
+              "train_hi_bench_000385",
+              "train_hi_bench_001917",
+              "train_hi_bench_001362",
+              "train_hi_bench_001957",
+              "train_hi_bench_000339",
+              "train_hi_bench_001876"
+            ]
+          ],
+          "weight_sum": -19.15041750787444,
+          "weight_abs_sum": 112841.68632786242
+        },
+        {
+          "step": 28,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.06769180297851562,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.054453931748867035,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000956",
+              "train_hi_bench_000644",
+              "train_hi_bench_001329",
+              "train_hi_bench_001241",
+              "train_hi_bench_001065",
+              "train_hi_bench_000533",
+              "train_hi_bench_001270",
+              "train_hi_bench_001202"
+            ]
+          ],
+          "weight_sum": -17.11592770367111,
+          "weight_abs_sum": 113132.04940080231
+        },
+        {
+          "step": 29,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.035367872565984726,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.03211233764886856,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000914",
+              "train_hi_bench_001849",
+              "train_hi_bench_001444",
+              "train_hi_bench_000236",
+              "train_hi_bench_001822",
+              "train_hi_bench_000170",
+              "train_hi_bench_002094",
+              "train_hi_bench_002107"
+            ]
+          ],
+          "weight_sum": -13.861824431133474,
+          "weight_abs_sum": 113413.07861471998
+        },
+        {
+          "step": 30,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.028707368299365044,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.030873462557792664,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000974",
+              "train_hi_bench_001394",
+              "train_hi_bench_000451",
+              "train_hi_bench_001324",
+              "train_hi_bench_001731",
+              "train_hi_bench_000573",
+              "train_hi_bench_001162",
+              "train_hi_bench_001953"
+            ]
+          ],
+          "weight_sum": -11.30436875961022,
+          "weight_abs_sum": 113689.66519181579
+        }
+      ],
+      [
+        {
+          "step": 1,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.7356981635093689,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.7159832119941711,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001379",
+              "train_hi_bench_001639",
+              "train_hi_bench_001730",
+              "train_hi_bench_001179",
+              "train_hi_bench_000000",
+              "train_hi_bench_001731",
+              "train_hi_bench_001778",
+              "train_hi_bench_000681"
+            ]
+          ],
+          "weight_sum": -27.524304636937494,
+          "weight_abs_sum": 99029.62058959862
+        },
+        {
+          "step": 2,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.6530106663703918,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.6603156924247742,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000367",
+              "train_hi_bench_001951",
+              "train_hi_bench_000491",
+              "train_hi_bench_001711",
+              "train_hi_bench_001545",
+              "train_hi_bench_001513",
+              "train_hi_bench_001352",
+              "train_hi_bench_000404"
+            ]
+          ],
+          "weight_sum": -56.385473537304165,
+          "weight_abs_sum": 100482.60553439322
+        },
+        {
+          "step": 3,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.0972033366560936,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.0840107798576355,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001383",
+              "train_hi_bench_000531",
+              "train_hi_bench_001178",
+              "train_hi_bench_000147",
+              "train_hi_bench_001434",
+              "train_hi_bench_001222",
+              "train_hi_bench_000235",
+              "train_hi_bench_001428"
+            ]
+          ],
+          "weight_sum": -66.30135463981594,
+          "weight_abs_sum": 101431.7313639178
+        },
+        {
+          "step": 4,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.06545674800872803,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.05446368455886841,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001233",
+              "train_hi_bench_001698",
+              "train_hi_bench_001876",
+              "train_hi_bench_001673",
+              "train_hi_bench_001094",
+              "train_hi_bench_001026",
+              "train_hi_bench_001149",
+              "train_hi_bench_001300"
+            ]
+          ],
+          "weight_sum": -78.47555961949124,
+          "weight_abs_sum": 102318.51142282582
+        },
+        {
+          "step": 5,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.38816478848457336,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.7578617930412292,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001911",
+              "train_hi_bench_001394",
+              "train_hi_bench_001985",
+              "train_hi_bench_000054",
+              "train_hi_bench_001012",
+              "train_hi_bench_000006",
+              "train_hi_bench_000637",
+              "train_hi_bench_000451"
+            ]
+          ],
+          "weight_sum": -84.29715676334402,
+          "weight_abs_sum": 103082.09841617932
+        },
+        {
+          "step": 6,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.0393330380320549,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.0253671295940876,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001739",
+              "train_hi_bench_000753",
+              "train_hi_bench_000271",
+              "train_hi_bench_001887",
+              "train_hi_bench_001324",
+              "train_hi_bench_000349",
+              "train_hi_bench_000448",
+              "train_hi_bench_000639"
+            ]
+          ],
+          "weight_sum": -75.16245236386997,
+          "weight_abs_sum": 103732.87567832357
+        },
+        {
+          "step": 7,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.075360968708992,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.07603149116039276,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001627",
+              "train_hi_bench_001990",
+              "train_hi_bench_000997",
+              "train_hi_bench_001469",
+              "train_hi_bench_001863",
+              "train_hi_bench_001338",
+              "train_hi_bench_001074",
+              "train_hi_bench_000782"
+            ]
+          ],
+          "weight_sum": -68.19993866357508,
+          "weight_abs_sum": 104340.56956453677
+        },
+        {
+          "step": 8,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.025351835414767265,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.020594019442796707,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001189",
+              "train_hi_bench_000406",
+              "train_hi_bench_000986",
+              "train_hi_bench_000327",
+              "train_hi_bench_000385",
+              "train_hi_bench_000421",
+              "train_hi_bench_000239",
+              "train_hi_bench_000390"
+            ]
+          ],
+          "weight_sum": -63.43509625022954,
+          "weight_abs_sum": 104936.4318545894
+        },
+        {
+          "step": 9,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.02440130151808262,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.01651180163025856,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000858",
+              "train_hi_bench_001997",
+              "train_hi_bench_000074",
+              "train_hi_bench_001465",
+              "train_hi_bench_000533",
+              "train_hi_bench_000135",
+              "train_hi_bench_001444",
+              "train_hi_bench_001298"
+            ]
+          ],
+          "weight_sum": -56.433788242493755,
+          "weight_abs_sum": 105513.6686394939
+        },
+        {
+          "step": 10,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.03605924919247627,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.030238039791584015,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001792",
+              "train_hi_bench_001854",
+              "train_hi_bench_000125",
+              "train_hi_bench_000299",
+              "train_hi_bench_000871",
+              "train_hi_bench_000456",
+              "train_hi_bench_001622",
+              "train_hi_bench_000168"
+            ]
+          ],
+          "weight_sum": -51.00070630031238,
+          "weight_abs_sum": 106080.61068037886
+        },
+        {
+          "step": 11,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.02736395038664341,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.024244414642453194,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000257",
+              "train_hi_bench_001154",
+              "train_hi_bench_001581",
+              "train_hi_bench_001603",
+              "train_hi_bench_000490",
+              "train_hi_bench_001414",
+              "train_hi_bench_001791",
+              "train_hi_bench_000240"
+            ]
+          ],
+          "weight_sum": -44.243116373285375,
+          "weight_abs_sum": 106624.21352583052
+        },
+        {
+          "step": 12,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.024351660162210464,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.018600625917315483,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_002012",
+              "train_hi_bench_001879",
+              "train_hi_bench_000205",
+              "train_hi_bench_001242",
+              "train_hi_bench_002055",
+              "train_hi_bench_000095",
+              "train_hi_bench_000555",
+              "train_hi_bench_000956"
+            ]
+          ],
+          "weight_sum": -38.020176700504834,
+          "weight_abs_sum": 107147.0118743944
+        },
+        {
+          "step": 13,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.044488575309515,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.02661219984292984,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000255",
+              "train_hi_bench_000619",
+              "train_hi_bench_000735",
+              "train_hi_bench_000164",
+              "train_hi_bench_002067",
+              "train_hi_bench_002084",
+              "train_hi_bench_001031",
+              "train_hi_bench_001890"
+            ]
+          ],
+          "weight_sum": -31.686724507168474,
+          "weight_abs_sum": 107643.98847262695
+        },
+        {
+          "step": 14,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.027374399825930595,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.019202232360839844,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000378",
+              "train_hi_bench_000848",
+              "train_hi_bench_001202",
+              "train_hi_bench_001615",
+              "train_hi_bench_001296",
+              "train_hi_bench_000273",
+              "train_hi_bench_000166",
+              "train_hi_bench_000092"
+            ]
+          ],
+          "weight_sum": -27.725760633009106,
+          "weight_abs_sum": 108118.3084402898
+        },
+        {
+          "step": 15,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.05909302830696106,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.037275444716215134,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000839",
+              "train_hi_bench_000794",
+              "train_hi_bench_001896",
+              "train_hi_bench_000329",
+              "train_hi_bench_000029",
+              "train_hi_bench_000057",
+              "train_hi_bench_000764",
+              "train_hi_bench_000276"
+            ]
+          ],
+          "weight_sum": -19.152984791671873,
+          "weight_abs_sum": 108579.5875961396
+        },
+        {
+          "step": 16,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.058271624147892,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.03257418051362038,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000079",
+              "train_hi_bench_001658",
+              "train_hi_bench_002036",
+              "train_hi_bench_000927",
+              "train_hi_bench_000635",
+              "train_hi_bench_000963",
+              "train_hi_bench_000573",
+              "train_hi_bench_001329"
+            ]
+          ],
+          "weight_sum": -14.42813801706159,
+          "weight_abs_sum": 109020.93754180697
+        },
+        {
+          "step": 17,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.05447661131620407,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.02258196286857128,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000996",
+              "train_hi_bench_000991",
+              "train_hi_bench_000532",
+              "train_hi_bench_001377",
+              "train_hi_bench_001166",
+              "train_hi_bench_000912",
+              "train_hi_bench_000908",
+              "train_hi_bench_001454"
+            ]
+          ],
+          "weight_sum": -11.944181250306425,
+          "weight_abs_sum": 109437.1505578749
+        },
+        {
+          "step": 18,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.07961712032556534,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.06622124463319778,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000324",
+              "train_hi_bench_001936",
+              "train_hi_bench_001393",
+              "train_hi_bench_001356",
+              "train_hi_bench_001843",
+              "train_hi_bench_000572",
+              "train_hi_bench_002025",
+              "train_hi_bench_000721"
+            ]
+          ],
+          "weight_sum": -14.124909187420581,
+          "weight_abs_sum": 109833.32963179893
+        },
+        {
+          "step": 19,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.022497879341244698,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.0601876899600029,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000093",
+              "train_hi_bench_000314",
+              "train_hi_bench_001389",
+              "train_hi_bench_000855",
+              "train_hi_bench_000375",
+              "train_hi_bench_001954",
+              "train_hi_bench_001436",
+              "train_hi_bench_001437"
+            ]
+          ],
+          "weight_sum": -10.285721271193868,
+          "weight_abs_sum": 110218.43049547558
+        },
+        {
+          "step": 20,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.08298890292644501,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.07077577710151672,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000775",
+              "train_hi_bench_000382",
+              "train_hi_bench_000612",
+              "train_hi_bench_000388",
+              "train_hi_bench_001690",
+              "train_hi_bench_001624",
+              "train_hi_bench_001881",
+              "train_hi_bench_001107"
+            ]
+          ],
+          "weight_sum": -10.87359847282029,
+          "weight_abs_sum": 110592.0779153254
+        },
+        {
+          "step": 21,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.022953055799007416,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.05678335949778557,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000170",
+              "train_hi_bench_001900",
+              "train_hi_bench_001068",
+              "train_hi_bench_000686",
+              "train_hi_bench_001663",
+              "train_hi_bench_000905",
+              "train_hi_bench_000254",
+              "train_hi_bench_001114"
+            ]
+          ],
+          "weight_sum": -14.604716570795853,
+          "weight_abs_sum": 110951.67054662277
+        },
+        {
+          "step": 22,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.05651869997382164,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.029761357232928276,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001953",
+              "train_hi_bench_000187",
+              "train_hi_bench_000130",
+              "train_hi_bench_000687",
+              "train_hi_bench_001638",
+              "train_hi_bench_001410",
+              "train_hi_bench_000025",
+              "train_hi_bench_002035"
+            ]
+          ],
+          "weight_sum": -15.116203790719684,
+          "weight_abs_sum": 111295.50804968068
+        },
+        {
+          "step": 23,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.064726322889328,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.030582357197999954,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000751",
+              "train_hi_bench_001707",
+              "train_hi_bench_000044",
+              "train_hi_bench_001918",
+              "train_hi_bench_001208",
+              "train_hi_bench_001395",
+              "train_hi_bench_000064",
+              "train_hi_bench_000206"
+            ]
+          ],
+          "weight_sum": -13.263726634735884,
+          "weight_abs_sum": 111626.3846758572
+        },
+        {
+          "step": 24,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.021332310512661934,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.04094715416431427,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000647",
+              "train_hi_bench_002089",
+              "train_hi_bench_001748",
+              "train_hi_bench_000795",
+              "train_hi_bench_000416",
+              "train_hi_bench_000823",
+              "train_hi_bench_000143",
+              "train_hi_bench_000684"
+            ]
+          ],
+          "weight_sum": -14.824822818552008,
+          "weight_abs_sum": 111943.58673666648
+        },
+        {
+          "step": 25,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.08229724317789078,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.03922658413648605,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001498",
+              "train_hi_bench_001716",
+              "train_hi_bench_000731",
+              "train_hi_bench_000151",
+              "train_hi_bench_000393",
+              "train_hi_bench_000812",
+              "train_hi_bench_001842",
+              "train_hi_bench_000302"
+            ]
+          ],
+          "weight_sum": -17.964009896147108,
+          "weight_abs_sum": 112247.50387004875
+        },
+        {
+          "step": 26,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.03108179196715355,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.03219868242740631,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001236",
+              "train_hi_bench_000531",
+              "train_hi_bench_000734",
+              "train_hi_bench_000751",
+              "train_hi_bench_002022",
+              "train_hi_bench_001189",
+              "train_hi_bench_001154",
+              "train_hi_bench_001489"
+            ]
+          ],
+          "weight_sum": -20.96936367995953,
+          "weight_abs_sum": 112546.729111644
+        },
+        {
+          "step": 27,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.03222189098596573,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.04260646551847458,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000406",
+              "train_hi_bench_001877",
+              "train_hi_bench_000710",
+              "train_hi_bench_000187",
+              "train_hi_bench_001356",
+              "train_hi_bench_000083",
+              "train_hi_bench_001008",
+              "train_hi_bench_001107"
+            ]
+          ],
+          "weight_sum": -19.15041750787444,
+          "weight_abs_sum": 112841.68632786242
+        },
+        {
+          "step": 28,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.041216060519218445,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.054453931748867035,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000267",
+              "train_hi_bench_000981",
+              "train_hi_bench_000282",
+              "train_hi_bench_000894",
+              "train_hi_bench_000044",
+              "train_hi_bench_000437",
+              "train_hi_bench_001449",
+              "train_hi_bench_001428"
+            ]
+          ],
+          "weight_sum": -17.11592770367111,
+          "weight_abs_sum": 113132.04940080231
+        },
+        {
+          "step": 29,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.03443336859345436,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.03211233764886856,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_001313",
+              "train_hi_bench_000164",
+              "train_hi_bench_001363",
+              "train_hi_bench_001778",
+              "train_hi_bench_000991",
+              "train_hi_bench_001730",
+              "train_hi_bench_001249",
+              "train_hi_bench_000837"
+            ]
+          ],
+          "weight_sum": -13.861824431133474,
+          "weight_abs_sum": 113413.07861471998
+        },
+        {
+          "step": 30,
+          "scale_before": null,
+          "loss_finite": true,
+          "found_inf_scaler": null,
+          "found_inf_derived": false,
+          "max_grad_pre_reduce": 0.044260259717702866,
+          "nonfinite_pre_reduce": [],
+          "max_grad_post_reduce": 0.030873462557792664,
+          "nonfinite_post_reduce": [],
+          "sample_ids": [
+            [
+              "train_hi_bench_000735",
+              "train_hi_bench_000986",
+              "train_hi_bench_002084",
+              "train_hi_bench_001891",
+              "train_hi_bench_001290",
+              "train_hi_bench_000601",
+              "train_hi_bench_001722",
+              "train_hi_bench_000369"
+            ]
+          ],
+          "weight_sum": -11.30436875961022,
+          "weight_abs_sum": 113689.66519181579
+        }
+      ]
+    ]
+  },
+  "name": "c ddp 2x8",
+  "global_batch": 16,
+  "losses": [
+    3.758833408355713,
+    1.5855929851531982,
+    1.103300929069519,
+    1.142852544784546,
+    1.4788248538970947,
+    0.8905494213104248,
+    0.939053475856781,
+    0.7906103730201721,
+    0.7869699001312256,
+    0.6585294008255005,
+    0.7423938512802124,
+    0.6748600006103516,
+    0.6796631217002869,
+    0.6819155216217041,
+    0.6187580823898315,
+    0.7366906404495239,
+    0.7130354642868042,
+    0.6921058297157288,
+    0.5222756862640381,
+    0.5748251676559448,
+    0.6131898760795593,
+    0.5985585451126099,
+    0.6251928806304932,
+    0.5781307220458984,
+    0.5629363059997559,
+    0.44221341609954834,
+    0.3910432457923889,
+    0.4008758068084717,
+    0.445684552192688,
+    0.4669601321220398
+  ],
+  "skipped_steps": 0,
+  "skipped_indices": [],
+  "init_scale": 65536.0
+}
